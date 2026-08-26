@@ -6,9 +6,7 @@ ENV MY_ENV_VAR=development
 
 WORKDIR /app
 
-ADD app.py .
-ADD docker-logo.jpg .
-ADD https://raw.githubusercontent.com/docker-library/docs/refs/heads/master/docker/README.md .
+ADD app.tar .
 
 RUN pip install Flask
 
