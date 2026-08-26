@@ -1,0 +1,22 @@
+ARG PYTHON_VERSION=3.12.14
+
+FROM python:${PYTHON_VERSION} AS base
+
+WORKDIR /app
+
+COPY app.py docker-logo.jpg requirements.txt ./
+
+FROM python:${PYTHON_VERSION}-slim
+
+WORKDIR /app
+
+ENV MY_ENV_VAR=development
+
+COPY --from=base /app .
+
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+EXPOSE 8080
+
+ENTRYPOINT [ "python", "app.py" ]
