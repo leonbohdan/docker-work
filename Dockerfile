@@ -1,4 +1,8 @@
-FROM python:3.12.14
+ARG PYTHON_VERSION=3.12.14
+
+FROM python:${PYTHON_VERSION}
+
+ENV MY_ENV_VAR=development
 
 WORKDIR /app
 

@@ -3,10 +3,12 @@ import os
 
 app = Flask(__name__)
 
+myEnvVar = os.environ.get("MY_ENV_VAR", "development")
+
 @app.route('/')
 def hello():
     return f'''
-    Docker is Awesome!
+    Docker is Awesome! My env var is: {myEnvVar}
 <pre>                  ##        .</pre>
 <pre>            ## ## ##       ===</pre>
 <pre>        ## ## ## ##      ===</pre>
