@@ -5,10 +5,28 @@ app = Flask(__name__)
 
 myEnvVar = os.environ.get("MY_ENV_VAR", "development")
 
+counter_file = "data/counter.txt"
+
+def read_counter():
+    try:
+        with open(counter_file, 'r') as file:
+            return int(file.read())
+    except FileNotFoundError:
+        return 0
+
+def write_counter(counter):
+    with open(counter_file, 'w') as file:
+        file.write(str(counter))
+
 @app.route('/')
 def hello():
+    counter = read_counter()
+    counter += 1
+    write_counter(counter)
     return f'''
-    Docker is Awesome! My env var is: {myEnvVar}
+    Docker is Awesome! My env var is: <b>{myEnvVar}</b>
+    <br/>
+    This page was reloaded <b>{counter}</b> times
 <pre>                  ##        .</pre>
 <pre>            ## ## ##       ===</pre>
 <pre>        ## ## ## ##      ===</pre>
