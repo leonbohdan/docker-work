@@ -37,6 +37,7 @@ All project guides, cheat sheets, and best practices are organized by language i
 
 | 🇺🇦 Українська (Ukrainian) | 🇬🇧 English |
 | :--- | :--- |
+| 🐙 [Повний посібник по Docker Compose](docs/uk/DOCKER_COMPOSE_GUIDE.md) | 🐙 [Complete Docker Compose Guide](docs/en/DOCKER_COMPOSE_GUIDE.md) |
 | 📖 [Посібник по роботі з Docker](docs/uk/DOCKER_WORKFLOW_GUIDE.md) | 📖 [Docker Workflow Guide](docs/en/DOCKER_WORKFLOW_GUIDE.md) |
 | ⚡ [Шпаргалка команд Docker](docs/uk/DOCKER_CHEAT_SHEET.md) | ⚡ [Docker Cheat Sheet](docs/en/DOCKER_CHEAT_SHEET.md) |
 | 🛡️ [Найкращі практики та правила](docs/uk/DOCKER_BEST_PRACTICES.md) | 🛡️ [Docker Best Practices](docs/en/DOCKER_BEST_PRACTICES.md) |
@@ -44,7 +45,18 @@ All project guides, cheat sheets, and best practices are organized by language i
 
 ---
 
-## 🐳 Quick Start (Multi-Container Setup)
+## 🐳 Quick Start
+
+### Option A: Using Docker Compose (Recommended)
+```bash
+# Start entire stack (Flask + MySQL) in detached mode
+docker compose up -d
+
+# Stop and tear down stack
+docker compose down
+```
+
+### Option B: Manual Multi-Container Setup (Docker CLI)
 
 1. **Create network:**
    ```bash

@@ -31,26 +31,36 @@
 
 ---
 
-## 🐳 Швидкий запуск через Docker
+## 🐳 Швидкий запуск
 
-### 1. Створення спільної мережі
+### Варіант А: Через Docker Compose (Найпростіший спосіб)
 ```bash
-docker network create app-network
+# Запуск усього стеку (Flask + MySQL) у фоновому режимі
+docker compose up -d
+
+# Зупинка та видалення контейнерів і мережі
+docker compose down
 ```
 
-### 2. Запуск контейнера MySQL
-```bash
-docker build -f Dockerfile.mysql -t my-mysql:1.0 .
-docker run -d --name mysql --network app-network -p 3306:3306 -v mysql_data:/var/lib/mysql my-mysql:1.0
-```
+### Варіант Б: Вручну через Docker CLI
+1. **Створення спільної мережі:**
+   ```bash
+   docker network create app-network
+   ```
 
-### 3. Запуск вебдодатку
-```bash
-docker build -f Dockerfile.multistage -t flask-app:1.0 .
-docker run -d --name web-app --network app-network -p 8080:8080 flask-app:1.0
-```
+2. **Запуск контейнера MySQL:**
+   ```bash
+   docker build -f Dockerfile.mysql -t my-mysql:1.0 .
+   docker run -d --name mysql --network app-network -p 3306:3306 -v mysql_data:/var/lib/mysql my-mysql:1.0
+   ```
 
-### 4. Доступ до додатку
+3. **Запуск вебдодатку:**
+   ```bash
+   docker build -f Dockerfile.multistage -t flask-app:1.0 .
+   docker run -d --name web-app --network app-network -p 8080:8080 flask-app:1.0
+   ```
+
+### 🌐 Доступ до додатку
 - **Вебінтерфейс**: [http://localhost:8080](http://localhost:8080)
 - **Логотип**: [http://localhost:8080/logo](http://localhost:8080/logo)
 
@@ -58,6 +68,7 @@ docker run -d --name web-app --network app-network -p 8080:8080 flask-app:1.0
 
 ## 📚 Детальна документація
 
+- [Повний посібник по Docker Compose](DOCKER_COMPOSE_GUIDE.md)
 - [Посібник по роботі з Docker та архітектурою](DOCKER_WORKFLOW_GUIDE.md)
 - [Шпаргалка команд Docker (Cheat Sheet)](DOCKER_CHEAT_SHEET.md)
 - [Найкращі практики та правила Docker](DOCKER_BEST_PRACTICES.md)

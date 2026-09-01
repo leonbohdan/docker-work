@@ -31,26 +31,36 @@ A lightweight Flask web application containerized with Docker, featuring MySQL p
 
 ---
 
-## 🐳 Quick Start with Docker
+## 🐳 Quick Start
 
-### 1. Create a shared network
+### Option A: Using Docker Compose (Recommended & Easiest)
 ```bash
-docker network create app-network
+# Launch entire stack (Flask + MySQL) in detached mode
+docker compose up -d
+
+# Stop and remove containers and network
+docker compose down
 ```
 
-### 2. Launch MySQL container
-```bash
-docker build -f Dockerfile.mysql -t my-mysql:1.0 .
-docker run -d --name mysql --network app-network -p 3306:3306 -v mysql_data:/var/lib/mysql my-mysql:1.0
-```
+### Option B: Manual Multi-Container Setup via Docker CLI
+1. **Create shared network:**
+   ```bash
+   docker network create app-network
+   ```
 
-### 3. Launch Flask web app
-```bash
-docker build -f Dockerfile.multistage -t flask-app:1.0 .
-docker run -d --name web-app --network app-network -p 8080:8080 flask-app:1.0
-```
+2. **Launch MySQL container:**
+   ```bash
+   docker build -f Dockerfile.mysql -t my-mysql:1.0 .
+   docker run -d --name mysql --network app-network -p 3306:3306 -v mysql_data:/var/lib/mysql my-mysql:1.0
+   ```
 
-### 4. Access the application
+3. **Launch Flask web application:**
+   ```bash
+   docker build -f Dockerfile.multistage -t flask-app:1.0 .
+   docker run -d --name web-app --network app-network -p 8080:8080 flask-app:1.0
+   ```
+
+### 🌐 Access Application
 - **Web UI**: [http://localhost:8080](http://localhost:8080)
 - **Logo**: [http://localhost:8080/logo](http://localhost:8080/logo)
 
@@ -58,6 +68,7 @@ docker run -d --name web-app --network app-network -p 8080:8080 flask-app:1.0
 
 ## 📚 Complete Documentation
 
+- [Complete Docker Compose Guide](DOCKER_COMPOSE_GUIDE.md)
 - [Docker Workflow & Architecture Guide](DOCKER_WORKFLOW_GUIDE.md)
 - [Docker Command Reference & Cheat Sheet](DOCKER_CHEAT_SHEET.md)
 - [Docker Best Practices & Golden Rules](DOCKER_BEST_PRACTICES.md)
