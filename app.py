@@ -1,32 +1,37 @@
 from flask import Flask, Response, send_file
+from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
 
 myEnvVar = os.environ.get("MY_ENV_VAR", "development")
 
-counter_file = "data/counter.txt"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://app_user:1234@172.17.0.2/app_db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-def read_counter():
-    try:
-        with open(counter_file, 'r') as file:
-            return int(file.read())
-    except FileNotFoundError:
-        return 0
+class Counter(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.Integer)
 
-def write_counter(counter):
-    with open(counter_file, 'w') as file:
-        file.write(str(counter))
+with app.app_context():
+    db.create_all()
+    counter = Counter.query.first()
+    if counter is None:
+        counter = Counter(value=0)
+        db.session.add(counter)
+        db.session.commit()
 
 @app.route('/')
 def hello():
-    counter = read_counter()
-    counter += 1
-    write_counter(counter)
+    counter = Counter.query.first()
+    counter.value += 1
+    db.session.commit()
+
     return f'''
     Docker is Awesome! My env var is: <b>{myEnvVar}</b>
     <br/>
-    This page was reloaded <b>{counter}</b> times
+    This page was reloaded <b>{counter.value}</b> times
 <pre>                  ##        .</pre>
 <pre>            ## ## ##       ===</pre>
 <pre>        ## ## ## ##      ===</pre>
