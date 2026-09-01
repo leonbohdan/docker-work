@@ -5,8 +5,9 @@ import os
 app = Flask(__name__)
 
 myEnvVar = os.environ.get("MY_ENV_VAR", "development")
+DB_CONNECTION = os.environ.get("DB_CONNECTION", "")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://app_user:1234@db-mysql/app_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_CONNECTION
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

@@ -13,6 +13,7 @@ services:
       - "8080:8080"
     environment:
       - MY_ENV_VAR=development
+      - DB_CONNECTION=mysql+mysqlconnector://app_user:1234@db-mysql/app_db
     networks:
       - db-data-net
     depends_on:
